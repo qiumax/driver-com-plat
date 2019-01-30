@@ -1,0 +1,233 @@
+extends layouts/master
+
+
+block content
+    div.row-fluid(style="padding-top:20px;")
+        div.widget.widget-padding.span12
+            div.widget-header
+                i.icon-list-alt
+                h5 发单
+            div.widget-body
+                div.widget-forms.clearfix
+                    form#form.form-horizontal(action="/api/account/add", method="POST")
+                        div.control-group
+                            label.control-label 车长
+                            div.controls
+                                select#truck.span7(tabindex="1" data-placeholder="Select here..")
+                                    -for(var i=0;i<trucks.length;i++)
+                                        option(value='#{trucks[i]._id}') #{trucks[i].name} | #{trucks[i].load} 吨 | #{trucks[i].size}
+
+                        div.control-group
+                            label.control-label 车型
+                            div.controls
+                                select#trucktype.span7(tabindex="1" data-placeholder="Select here..")
+                                    option(value='不限') 不限
+                                    option(value='高栏') 高栏
+                                    option(value='平板') 平板
+                                    option(value='箱式') 箱式
+
+                        div.control-group
+                            label.control-label 收货人信息
+                            div.controls
+                                    select#toinfo.span7(onchange="tochange()")
+                                        option(value="0") 请选择
+                                        -for(var i=0;i<adds.length;i++)
+                                            option(value='#{adds[i]._id}') #{adds[i].name}#{adds[i].phone}
+
+                        div.control-group
+                            label.control-label 收货人
+                            div.controls
+                                div.input-prepend
+                                    input(type="hidden" name="tolongitude",id="tolongitude")
+                                    input(type="hidden" name="tolatitude",id="tolatitude")
+                                    span.add-on(style="width:50px") 姓名
+                                    input.span3(type="text", name="toname",id="toname", required)
+                                    span.add-on(style="width:50px") 电话
+                                    input.span4(type="text", name="tophone", id="tophone",required)
+
+
+                        div.control-group
+                            label.control-label 收货地址
+                            div.controls
+                                input.span7(type="text", name="toaddress",id="toaddress",onblur="toaddchange()", required)
+                                p#username_hint.help-block.text-red
+
+                        div.control-group
+                            label.control-label 发货人信息
+                            div.controls
+                                    select#frominfo.span7(onchange="fromchange()")
+                                        option(value="0") 请选择
+                                        -for(var i=0;i<adds.length;i++)
+                                            option(value='#{adds[i]._id}') #{adds[i].name}#{adds[i].phone}
+
+                        div.control-group
+                            label.control-label 发货人
+                            div.controls
+                                div.input-prepend
+                                    input(type="hidden" name="fromlongitude" id="fromlongitude")
+                                    input(type="hidden" name="fromlatitude")
+                                    span.add-on(style="width:50px") 姓名
+                                    input.span3(type="text", name="fromname",id="fromname", required)
+                                    span.add-on(style="width:50px") 电话
+                                    input.span4(type="text", name="fromphone",id="fromphone", required)
+
+
+                        div.control-group
+                            label.control-label 发货地址
+                            div.controls
+                                input.span7(type="text", name="fromaddress", id="fromaddress",onblur="fromaddchange()", required)
+                                p#username_hint.help-block.text-red
+
+
+
+                        div.control-group
+                            label.control-label 发货时间
+                            div.controls
+                                input.span7(type="text", name="employee_id", required)
+                                p#username_hint.help-block.text-red
+
+
+                        div.control-group
+                            label.control-label 货物名称
+                            div.controls
+                                input.span7(type="text", name="cargo", required)
+                                p#username_hint.help-block.text-red
+
+                        div.control-group
+                            label.control-label 货物重量(吨)
+                            div.controls
+                                input.span7(type="text", name="mass", required)
+                                p#username_hint.help-block.text-red
+
+                        div.control-group
+                            label.control-label 货物尺寸(米)
+                            div.controls
+                                div.input-prepend
+                                    span.add-on 长
+                                    input.span2(type="text", name="changdu", required)
+                                    span.add-on 宽
+                                    input.span2(type="text", name="kuandu", required)
+                                    span.add-on 高
+                                    input.span2(type="text", name="gaodu", required)
+
+                        div.control-group
+                            label.control-label 备注
+                            div.controls
+                                input.span7(type="text", name="remark", required)
+                                p#username_hint.help-block.text-red
+
+            div.widget-footer
+                button.btn.btn-primary(type="button" onclick="submitform()") 提交
+
+    script.
+        function fromaddchange() {
+            var add = $("#fromaddress").val()
+            console.log(add)
+            getlongandlan(add,1)
+        }
+        function toaddchange() {
+            var add = $("#toaddress").val()
+            console.log(add)
+            getlongandlan(add, 2)
+        }
+        function fromchange() {
+            console.log('----')
+            var frominfo  = document.getElementById("frominfo");
+            console.log(frominfo.selectedIndex)
+            var addid = frominfo.options[frominfo.selectedIndex].value;
+            getaddress(addid,1)
+        }
+        function tochange() {
+            console.log('----')
+            var toinfo = document.getElementById("toinfo");
+            console.log(toinfo.selectedIndex)
+            var addid = toinfo.options[toinfo.selectedIndex].value;
+            getaddress(addid,2)
+        }
+        function getaddress(id,type) {
+            $.ajax({
+                url: '/api/publish/addr_detail',
+                data: {
+                    id: id
+                },
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    if (type == 1) {
+                        console.log('12')
+                        $("#fromname").val(data.add.name)
+                        $("#fromphone").val(data.add.phone)
+                        $("#fromlongitude").val(data.add.longitude)
+                        $("#fromlatitude").val(data.add.latitude)
+                        $("#fromaddress").val(data.add.address + data.add.note)
+                    }
+                    else if(type==2)
+                    {
+                        console.log('3')
+                        $("#toname").val(data.add.name)
+                        $("#tophone").val(data.add.phone)
+                        $("#tolongitude").val(data.add.longitude)
+                        $("#tolatitude").val(data.add.latitude)
+                        $("#toaddress").val(data.add.address + data.add.note)
+                    }
+                }
+            })
+        }
+
+        function getlongandlan(add,type) {
+            $.ajax({
+                url: '/api/publish/getlongandlan',
+                data: {
+                    add: add
+                },
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    if (data.status==0) {
+                        if(type==1){
+                            $("#fromlongitude").val(data.result.location.lng)
+                            $("#fromlatitude").val(data.result.location.lat)
+                        }
+                        else if(type==2){
+                            $("#tolongitude").val(data.result.location.lng)
+                            $("#tolatitude").val(data.result.location.lat)
+                        }
+                        console.log(data.result.location.lat)
+
+                    }
+
+                },
+                fail:function (data) {
+                    console.log(data)
+                }
+            })
+        }
+        function submitform() {
+            console.log('--')
+            $("#form").submit();//表单提交
+        }
+
+        function calprice() {
+            var phone = $("input[name='phone']").val();
+            if(!phone) return;
+
+            $.ajax({
+                url: '/api/account/check_phone',
+                data:{
+                    phone: phone
+                },
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.ok) {
+                        console.log('--')
+                    }
+
+                }
+            })
+        }

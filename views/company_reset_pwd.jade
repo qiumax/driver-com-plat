@@ -1,0 +1,54 @@
+extends layouts/master
+
+block nav_url
+  include nav/company
+
+block side_bar
+  include side_bar/company
+
+block content
+
+    h3 修改密码
+
+    div &nbsp
+
+    form#form.form-horizontal(action="/api/company/reset_pwd" method="POST" onsubmit="return validate()")
+        div.form-group
+            label.control-label.col-sm-3 旧密码
+            div.col-sm-9
+                input.form-control(type="password" name="old_pwd" required)
+                p.help-block
+
+        div.form-group
+            label.control-label.col-sm-3 新密码
+            div.col-sm-9
+                input.form-control(type="password" name="pwd" required)
+                p.help-block
+
+        div.form-group
+            label.control-label.col-sm-3 确认新密码
+            div.col-sm-9
+                input.form-control(type="password" name="pwd_confirm" required)
+                p.help-block
+
+        div.form-group
+            label.control-label.col-sm-3
+            div.col-sm-9
+                -if(msg.length>0)
+                    p.text-success #{msg}
+                -if(error.length>0)
+                    p.text-red #{error}
+                button.btn.btn-primary(type="submit" style="width:150px") 修改密码
+
+    script.
+        function validate() {
+            var pwd = $("input[name='pwd']").val();
+            var pwd_confirm = $("input[name='pwd_confirm']").val();
+
+            if (pwd && pwd_confirm && pwd != pwd_confirm) {
+                alert("两次输入的新密码不相符");
+                return false;
+            }
+
+            return true;
+        }

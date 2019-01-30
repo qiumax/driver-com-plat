@@ -1,0 +1,65 @@
+extends layouts/master
+
+
+block content
+    div.row-fluid(style="padding-top:20px;")
+        div.widget.widget-padding.span12#gallery_page
+            div.widget-header
+                i.icon-list-alt
+                h5 公司基本信息
+
+            div.widget-body
+                div.widget-forms.clearfix
+                    form.form-horizontal
+                            div.control-group
+                                label.control-label 用户名：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.username}
+
+                            div.control-group
+                                label.control-label 企业名称：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.name}
+
+                            div.control-group
+                                label.control-label 注册地址：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.address}
+
+
+
+                            div.control-group
+                                label.control-label 营业执照号码：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.license_number}
+
+                            div.control-group
+                                label.control-label 联系人：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.contact_name}
+
+                            div.control-group
+                                label.control-label 联系电话：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.contact_phone}
+
+                            div.control-group
+                                label.control-label 价格（元/吨/公里）：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.price_dun}
+
+                            div.control-group
+                                label.control-label 价格（元/方/公里)：
+                                div.controls
+                                    p(type="text"  style="margin-top:5px") #{company.price_fang}
+
+                            div.control-group
+                                label.control-label 营业执照图片：
+                                div.controls
+                                    -if(company.license_image)
+                                        a(href="#{company.license_image}" rel="facybox")
+                                          img#license_image(src="#{company.license_image}" style="height:100px")
+
+
+
+
