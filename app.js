@@ -57,6 +57,7 @@ var account = require('./routes/account');
 var order = require('./routes/order');
 var need = require('./routes/need');
 var index = require('./routes/index');
+var finance = require('./routes/finance');
 var publish = require('./routes/publish');
 
 // passport configuration
@@ -86,6 +87,7 @@ app.use('/api/order', order);
 app.use('/api/need', need);
 app.use('/api/index', index);
 app.use('/api/publish', publish);
+app.use('/api/finance', finance);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

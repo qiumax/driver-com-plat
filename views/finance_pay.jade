@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+
+    body(onload="javascript:document.pay_form.submit();")
+        div.main_container
+            div.row-fluid(style="padding-top:20px;")
+                div.widget.widget-padding.span12
+                    div.widget-header
+                        i.icon-list-alt
+                        h5 在线充值
+                    div.widget-body
+                        div.widget-forms.clearfix
+                            form#pay_form.form-horizontal(action="#{action_url}", method="POST" ,name="pay_form")
+                                -for(var key in params)
+
+                                    div.control-group
+                                        label.control-label #{key}：
+                                        div.controls
+                                            input.span7(type="text", name="#{key}",id="#{key}",value="#{params[key]}")
+                                            p#phone_hint.help-block.text-red
+
+
+                                button.btn.btn-primary(type="submit" )
+
+

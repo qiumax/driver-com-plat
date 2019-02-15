@@ -43,15 +43,26 @@ block content
                                 div.controls
                                     p(type="text"  style="margin-top:5px") #{company.contact_phone}
 
-                            div.control-group
-                                label.control-label 价格（元/吨/公里）：
-                                div.controls
-                                    p(type="text"  style="margin-top:5px") #{company.price_dun}
 
                             div.control-group
-                                label.control-label 价格（元/方/公里)：
-                                div.controls
-                                    p(type="text"  style="margin-top:5px") #{company.price_fang}
+                              label.control-label 配载价格(元/吨/公里)：
+                              div.controls
+                                p(type="text"  style="margin-top:5px") #{company.price_peizai_notchao}
+
+                            div.control-group
+                              label.control-label 配载超限价格(元/吨/公里)：
+                              div.controls
+                                p(type="text"  style="margin-top:5px") #{company.price_peizai_chao}
+
+                            div.control-group
+                              label.control-label 整车价格(元/吨/公里)：
+                              div.controls
+                                p(type="text"  style="margin-top:5px") #{company.price_zhengche_notchao}
+
+                            div.control-group
+                              label.control-label 整车超限价格(元/吨/公里)：
+                              div.controls
+                                p(type="text"  style="margin-top:5px") #{company.price_zhengche_chao}
 
                             div.control-group
                                 label.control-label 营业执照图片：

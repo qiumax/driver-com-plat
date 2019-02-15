@@ -153,7 +153,7 @@ select,textarea,input[type="text"],input[type="password"],input[type="datetime"]
     width: 30px;
 }
 select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
-    border-radius:1px;
+    border-radius:5px;
 }
 .input-append .add-on, .input-prepend .add-on{
   width:30px;
@@ -758,6 +758,7 @@ table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_dis
     border-color: #CCCCCC;
     border-style: solid;
     border-width: 0 1px 1px;
+    padding-left:195px;
 }
 .widget-footer:after{
    clear: both;

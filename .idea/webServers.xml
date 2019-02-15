@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="6725250f-7249-4731-87b9-630eb9dddd6f" name="driver-com-plat" url="http://94.191.39.145">
-        <fileTransfer host="94.191.39.145" port="22" rootFolder="/servers/nodes/driver-com-plat" accessType="SFTP">
+      <webServer id="6725250f-7249-4731-87b9-630eb9dddd6f" name="driver-com-plat" url="http://118.24.209.149">
+        <fileTransfer host="118.24.209.149" port="22" rootFolder="/servers/nodes/driver-com-plat" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
